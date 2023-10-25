@@ -5,23 +5,15 @@ document.addEventListener("DOMContentLoaded",function(){
   const dataList = document.getElementById(`pokemonList`)
   const obj = {}
   let current;
+  var theImg;
 
   const body = document.body;
-  body.style.backgroundImage = 'images/wallpaper-pika.jpeg'
-  body.style.backgroundColor = 'rgb(100,200,100)'
+  // body.style.backgroundImage = 'images/wallpaper-pika.jpeg'
+  // body.style.backgroundColor = 'rgb(100,200,100)'
 
   
-  function pokeball(){
-    const tilesContainer = document.createElement("div");
-    tilesContainer.classList.add = "pokeball";
-    tilesContainer.style.display = "flex";
-    tilesContainer.style.flexWrap = "wrap";
-    tilesContainer.style.width = "60px";
-    tilesContainer.style.height = "60px";
-    tilesContainer.style.backgroundColor='white';
-    body.appendChild(tilesContainer);
-  }
-  pokeball()
+  
+  
   
 
 
@@ -30,16 +22,34 @@ document.addEventListener("DOMContentLoaded",function(){
       let query = userInput.value.trim()
       userInput.value = ""
 
+
       $.get(`https://pokeapi.co/api/v2/pokemon-species/${query}`, (data) => {
-
-      console.log(data)
-  })
-
-    
+        console.log(data)
       
+    })
+      $.get(`https://pokeapi.co/api/v2/pokemon/${query}`, (data) => {
+        theImg = (data.sprites[`front_default`])
+        console.log(theImg)
+      // theImg = data
+    })
+    pokeball()
+    
   }
 
+function pc(){
+  let div = document.createElement('div')
+  div.setAttribute('id', 'pc')
+  div.style.height = '500px'
+  div.style.width = '70px'
+  body.appendChild(div)
+}
 
+function pokeball(){
+    const tilesContainer = document.createElement("img");
+    
+    tilesContainer.src = `${theImg}`
+    document.getElementById('pc').prepend(tilesContainer);
+  }
 
   const addEventListeners = () => {
       document.querySelector("#submit").addEventListener("click", search)
@@ -57,6 +67,7 @@ document.addEventListener("DOMContentLoaded",function(){
 
     const start = () => {
       addEventListeners()
+      pc()
     }
   start()
 
