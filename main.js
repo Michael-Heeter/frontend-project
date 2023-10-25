@@ -1,24 +1,17 @@
 document.addEventListener("DOMContentLoaded",function(){
 
-  const pokemon = $.get(`https://pokeapi.co/api/v2/pokemon/`)
   const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`)
   const dataList = document.getElementById(`pokemonList`)
   const obj = {}
+  const objPoke = {}
   let current;
-  var theImg;
+  let theImg;
+  let count=0;
 
   const body = document.body;
-  // body.style.backgroundImage = 'images/wallpaper-pika.jpeg'
-  // body.style.backgroundColor = 'rgb(100,200,100)'
-
-  
-  
-  
-  
-
 
   function search(){
-      userInput = document.querySelector("#user-section input")
+      let userInput = document.querySelector("#user-section input")
       let query = userInput.value.trim()
       userInput.value = ""
 
@@ -32,8 +25,8 @@ document.addEventListener("DOMContentLoaded",function(){
         console.log(theImg)
       // theImg = data
     })
+    setTimeout(pokesprite,0)
     pokeball()
-    
   }
 
 function pc(){
@@ -44,11 +37,14 @@ function pc(){
   body.appendChild(div)
 }
 
-function pokeball(){
+function pokesprite(){
     const tilesContainer = document.createElement("img");
-    
-    tilesContainer.src = `${theImg}`
+    tilesContainer.classList.add(`${count}`)
+    tilesContainer.setAttribute(`id`, `pokemon ${count}`)
+    setTimeout(()=> {
+      tilesContainer.src = `${theImg}`
     document.getElementById('pc').prepend(tilesContainer);
+    }, 500)
   }
 
   const addEventListeners = () => {
@@ -57,10 +53,11 @@ function pokeball(){
         if(event.key === "Enter"){
           
        
-        if(pokeList !== Object.keys[obj] || ""){
+        if(pokeList !== Object.keys[obj]){
           alert('Pokemon not found in Pokedex')
         } else {
-            search()
+          count++
+          search()
         } }
       })
     }
@@ -71,6 +68,36 @@ function pokeball(){
     }
   start()
 
+  function pokeball(){
+    const options = document.createElement('div')
+    options.classList.add('{count}')
+    options.setAttribute('id', `pokemon #${count}`)
+    options.style.width = '80px'
+    options.style.height = ''
+    options.style.backgroundColor = 'rgba(0,0,0,0.3)'
+    document.getElementById('pc').prepend(options)
+    setTimeout(buttons, 800)
+  }
+
+  function buttons(){
+    release = document.createElement('button')
+    release.setAttribute('id', `release of ${count}`)
+    release.textContent = 'Release'
+    document.getElementById(`pokemon #${count}`).prepend(release)
+    
+    toContainerTwo = document.createElement('button')
+    toContainerTwo.setAttribute('id', `toContainerTwo of ${count}`)
+    toContainerTwo.textContent = 'Compare in 2'
+    document.getElementById(`pokemon #${count}`).prepend(toContainerTwo)
+
+    toContainerOne = document.createElement('button')
+    toContainerOne.setAttribute('id', `toContainerOne of ${count}`)
+    toContainerOne.textContent = 'Compare in 1'
+    document.getElementById(`pokemon #${count}`).prepend(toContainerOne)
+    release.addEventListener('click', (e) => {
+      e.target.parentNode.remove()
+    })
+  }
 
   function inputList(){
       let data = document.createElement('option')
@@ -85,10 +112,6 @@ function pokeball(){
         }
         console.log(obj)
   })
-  //     // for(let i = 0; i < pokeList.length; i++){
-  //     //     data.pokemon['name'][i]
-  //     // }
-  //     // data.value = pok
   }
   inputList()
 
