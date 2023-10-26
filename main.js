@@ -147,6 +147,10 @@ function compareOne(){
   const div3 = document.createElement('div')
   div3.setAttribute('id','div3')
   container3.appendChild(div3)
+
+  const whitewall2 = document.createElement('div')
+  whitewall2.setAttribute('id','whitewall2')
+  body.prepend(whitewall2)
 }
 
 function compareTwo(){
@@ -175,6 +179,10 @@ function compareTwo(){
   const div4 = document.createElement('div')
   div4.setAttribute('id','div4')
   container4.appendChild(div4)
+
+  const whitewall = document.createElement('div')
+  whitewall.setAttribute('id','whitewall')
+  body.prepend(whitewall)
 }
 
 
@@ -322,14 +330,13 @@ function pokesprite(pokemons){
       div3.style.fontSize = 20
       div3.textContent = `Description:\n${description}`
 
-      const whitewall2 = document.createElement('div')
+      const whitewall2 = document.getElementById('whitewall2')
       whitewall2.style.backgroundColor = 'rgba(255,255,255,0.6)'
       whitewall2.style.top = `10vh`
       whitewall2.style.left = '0'
       whitewall2.style.width = `35vw`
       whitewall2.style.height = `30vh`
       whitewall2.style.position = 'absolute'
-      body.prepend(whitewall2)
     })
 
     })
@@ -393,14 +400,13 @@ function pokesprite(pokemons){
       div4.style.fontSize = 20
       div4.textContent = `Description:\n${description}`
 
-      const whitewall = document.createElement('div')
+      const whitewall = document.getElementById('whitewall')
       whitewall.style.backgroundColor = 'rgba(255,255,255,0.6)'
       whitewall.style.top = `10vh`
       whitewall.style.right = '0'
       whitewall.style.width = `35vw`
       whitewall.style.height = `30vh`
       whitewall.style.position = 'absolute'
-      body.prepend(whitewall)
 
       // $.get('https://')
     })
