@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded",function(){
   userSection.style.textShadow = 'black 4px 4px'
 
   const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`, data => {
-    console.log(data.results)
             for(let i = 0; i < data.results.length; i++){
           current = data.results[i].name
           obj[current] = i
@@ -78,10 +77,9 @@ const options = {
 
 
 
-      $.get(`https://pokeapi.co/api/v2/pokemon/${query}`, (data) => {
+      $.get(`https://pokeapi.co/api/v2/pokemon/${query}/`, (data) => {
         theImg = (data.sprites[`front_default`])
         let names = {}
-        console.log(data)
         for(let i = 0; i < data.stats.length; i++){
           let temp = data.stats[i]['base_stat']
           let kiy = data.stats[i].stat.name
@@ -95,7 +93,6 @@ const options = {
         }
         
         stat[`${query}`] = names
-        console.log(abilities)
         
     })
     setTimeout(pokesprite(query),0)
@@ -134,7 +131,7 @@ function compareOne(){
   const container3 = document.createElement('div')
   container3.setAttribute('id', 'container3')
   container3.style.width = '35vw'
-  container3.style.height = '60vh'
+  container3.style.height = '55vh'
   container3.style.position = 'absolute'
   container3.style.bottom = '0'
   container3.style.left = '0'
@@ -166,7 +163,7 @@ function compareTwo(){
   const container4 = document.createElement('div')
   container4.setAttribute('id', 'container4')
   container4.style.width = '35vw'
-  container4.style.height = '60vh'
+  container4.style.height = '55vh'
   container4.style.position = 'absolute'
   container4.style.bottom = '0'
   container4.style.right = '0'
@@ -191,7 +188,6 @@ function compareTwo(){
 function pokesprite(pokemons){
     const tilesContainer = document.createElement("img");
     tilesContainer.classList.add(`${pokemons}`)
-    console.log(pokemons)
     tilesContainer.setAttribute(`id`, `pokemon ${pokemons}`)
     setTimeout(()=> {
       tilesContainer.src = `${theImg}`
@@ -335,7 +331,7 @@ function pokesprite(pokemons){
       whitewall2.style.top = `10vh`
       whitewall2.style.left = '0'
       whitewall2.style.width = `35vw`
-      whitewall2.style.height = `30vh`
+      whitewall2.style.height = `35vh`
       whitewall2.style.position = 'absolute'
     })
 
@@ -405,7 +401,7 @@ function pokesprite(pokemons){
       whitewall.style.top = `10vh`
       whitewall.style.right = '0'
       whitewall.style.width = `35vw`
-      whitewall.style.height = `30vh`
+      whitewall.style.height = `35vh`
       whitewall.style.position = 'absolute'
 
       // $.get('https://')
