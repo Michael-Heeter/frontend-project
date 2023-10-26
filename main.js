@@ -1,16 +1,44 @@
 document.addEventListener("DOMContentLoaded",function(){
-
-  const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`)
-  const dataList = document.getElementById(`pokemonList`)
-  const obj = {}
-  const stat = {}
-  let current;
   let theImg;
   let count = 0;
+  const dataList = document.getElementById(`pokemonList`)
+  const body = document.body;const obj = {}
+  const stat = {}
+  let current;
+  let labels;
 
-  const body = document.body;
+  const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`, data => {
+    console.log(data.results)
+            for(let i = 0; i < data.results.length; i++){
+          current = data.results[i].name
+          obj[current] = i
+          let ball=document.createElement('option')
+          ball.value=`${data.results[i].name}`
+         
+          dataList.appendChild(ball)
+        }
 
+  const aChart = document.createElement('canvas')
+  aChart.setAttribute('id','chart1')
   
+  const bChart = document.createElement('canvas')
+  bChart.setAttribute('id','chart2')
+
+const dataChart = {
+  labels: ['hp','attack','defense','special-attack','special-defense','speed'],
+  datasets: [{
+    label: 'Base Stats',
+    data: labels,
+    fill: true,
+    backgroundColor: 'rgba(255,0,0,0.3)',
+    borderColor: 'black',
+    borderWidth: 1,
+  }]
+}
+
+
+
+    
 
   function search(){
       count++
@@ -44,10 +72,9 @@ function pc(){
   div.style.backgroundColor = 'blue'
   div.style.position = 'absolute'
   body.appendChild(div)
-  movePC()
 }
 
-function movePC(){
+setInterval(function (){
   let move = document.getElementById('pc')
   let windowWidth = window.innerWidth
   let containerWidth = move.offsetWidth
@@ -55,30 +82,33 @@ function movePC(){
   move.style.top = '50%'
   move.style.left = leftPosition + 'px';
   move.style.transform = 'translateY(-50%)';
-}
+}, 2000);
 
 function compareOne(){
-  const container1 = document.createElement('div');
-  container1.setAttribute(`id`, `container1`)
+  const container1 = document.createElement('div')
+  container1.setAttribute(`id`,`container1`)
   container1.style.width = `40vw`
   container1.style.height = `90vh`
   container1.style.backgroundColor = 'rgba(0,0,0,0.3)'
   container1.style.position = 'absolute'
   container1.style.bottom = `0`
-  container1.style.right = `0`
   body.appendChild(container1)
+
 }
 
 function compareTwo(){
-  const container2 = document.createElement('div')
-  container2.setAttribute(`id`,`container2`)
+  const container2 = document.createElement('div');
+  container2.setAttribute(`id`, `container2`)
   container2.style.width = `40vw`
   container2.style.height = `90vh`
   container2.style.backgroundColor = 'rgba(0,0,0,0.3)'
   container2.style.position = 'absolute'
   container2.style.bottom = `0`
+  container2.style.right = `0`
   body.appendChild(container2)
 }
+
+
 
 function pokesprite(pokemons){
     const tilesContainer = document.createElement("img");
@@ -130,18 +160,18 @@ function pokesprite(pokemons){
     release.textContent = 'Release'
     document.getElementById(`pokemon #${count}`).prepend(release)
 
-    toContainerOne = document.createElement('button')
-    toContainerOne.setAttribute('id', `toContainerOne of ${count}`)
-    toContainerOne.textContent = 'Compare in 2 ->'
-    document.getElementById(`pokemon #${count}`).prepend(toContainerOne)
-    toContainerOne.addEventListener('click', (e) => {
+    toContainerTwo = document.createElement('button')
+    toContainerTwo.setAttribute('id', `toContainerTwo of ${count}`)
+    toContainerTwo.textContent = 'Compare in 2 ->'
+    document.getElementById(`pokemon #${count}`).prepend(toContainerTwo)
+    toContainerTwo.addEventListener('click', (e) => {
 
     })
 
-    toContainerTwo = document.createElement('button')
-    toContainerTwo.setAttribute('id', `toContainerTwo of ${count}`)
-    toContainerTwo.textContent = 'Compare in <- 1'
-    document.getElementById(`pokemon #${count}`).prepend(toContainerTwo)
+    toContainerOne = document.createElement('button')
+    toContainerOne.setAttribute('id', `toContainerOne of ${count}`)
+    toContainerOne.textContent = 'Compare in <- 1'
+    document.getElementById(`pokemon #${count}`).prepend(toContainerOne)
 
 
     release.addEventListener('click', (e) => {
@@ -154,38 +184,37 @@ function pokesprite(pokemons){
       
     })
 
-    toContainerOne.addEventListener('click', (e) => {
+    toContainerTwo.addEventListener('click', (e) => {
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
-      $.get(`https://pokeapi.co/api/v2/pokemon/${parentClass}`, (data) => {
-        console.log(data.stats)
-        let myChart = new Chart(aChart, {
-          
-        })
-        for(let i = 0; i < data.stats.length; i++){
-          console.log(data.stats[i]['base_stat'])
-          console.log(data.stats[i].stat.name)
-        }
 
+      labels =  [
+      stat[parentClass]['hp'],
+      stat[parentClass]['attack'],
+      stat[parentClass]['defense'],
+      stat[parentClass]['special-attack'],
+      stat[parentClass]['special-defense'],
+      stat[parentClass]['speed']
+      ]
+
+      const myChart = new CharacterData(aChart, {
+        type: 'bar',
+        data: dataChart,
+        options: {
+          indexAxis: 'y',
+          scales: {
+            x: {
+              beginAtZero: true
+            }
+          }
+        }
       })
+      container1.appendChild(myChart)
+
     })
   }
 
-  function inputList(){
-      let data = document.createElement('option')
-      $.get(`https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=1292`, (data) => {
-        for(let i = 0; i < data.results.length; i++){
-          current = data.results[i].name
-          obj[current] = i
-          let ball=document.createElement('option')
-          ball.value=`${data.results[i].name}`
-          
-          dataList.appendChild(ball)
-        }
-        console.log(obj)
-  })
-  }
-  inputList()
-  console.log()
+
   
+})
 })
