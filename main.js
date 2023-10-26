@@ -1,4 +1,5 @@
 let abilities = {};
+let description;
 document.addEventListener("DOMContentLoaded",function(){
   let theImg;
   let count = 0;
@@ -142,6 +143,10 @@ function compareOne(){
   const div1 = document.createElement('div')
   div1.setAttribute('id','div1')
   container3.appendChild(div1)
+
+  const div3 = document.createElement('div')
+  div3.setAttribute('id','div3')
+  container3.appendChild(div3)
 }
 
 function compareTwo(){
@@ -166,6 +171,10 @@ function compareTwo(){
   const div2 = document.createElement('div')
   div2.setAttribute('id','div2')
   container4.appendChild(div2)
+
+  const div4 = document.createElement('div')
+  div4.setAttribute('id','div4')
+  container4.appendChild(div4)
 }
 
 
@@ -261,6 +270,10 @@ function pokesprite(pokemons){
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
 
+      $.get(`https://pokeapi.co/api/v2/pokemon-species/${parentClass}`, (data) => {
+        let description = (data['flavor_text_entries'][0]['flavor_text'])
+        console.log(description)
+
       let theLable =  [
       stat[parentClass]['hp'],
       stat[parentClass]['attack'],
@@ -293,16 +306,31 @@ function pokesprite(pokemons){
       }
 
       const div1 = document.getElementById('div1')
-      div1.style.backgroundColor = 'rgba(255,255,255,0.3)'
+      div1.style.backgroundColor = 'rgba(255,255,255,0.6)'
       let text1 = abilities[`${parentClass}0`]
       let text2 = abilities[`${parentClass}1`]
       div1.style.textAlign = 'center'
       div1.style.fontFamily = 'sans-serif'
-      div1.style.fontSize = 16
+      div1.style.fontSize = 20
       div1.textContent = ''
       div1.textContent = `Abilities: ${text1}, ${text2}`
       container1.appendChild(chart1)
 
+      const div3 = document.getElementById('div3')
+      div3.style.backgroundColor = `rgba(255,255,255,0.6)`
+      div3.style.textAlign = 'center'
+      div3.style.fontSize = 20
+      div3.textContent = `Description:\n${description}`
+
+      const whitewall2 = document.createElement('div')
+      whitewall2.style.backgroundColor = 'rgba(255,255,255,0.6)'
+      whitewall2.style.top = `10vh`
+      whitewall2.style.left = '0'
+      whitewall2.style.width = `35vw`
+      whitewall2.style.height = `30vh`
+      whitewall2.style.position = 'absolute'
+      body.prepend(whitewall2)
+    })
 
     })
 
@@ -311,6 +339,11 @@ function pokesprite(pokemons){
       chart2.setAttribute('id','chart2')
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
+
+      $.get(`https://pokeapi.co/api/v2/pokemon-species/${parentClass}`, (data) => {
+        let description = (data['flavor_text_entries'][0]['flavor_text'])
+        console.log(description)
+     
 
       let theLable =  [
       stat[parentClass]['hp'],
@@ -346,16 +379,32 @@ function pokesprite(pokemons){
 
       const div2 = document.getElementById('div2')
       div2.textContent = ''
-      div2.style.backgroundColor = 'rgba(255,255,255,0.3)'
+      div2.style.backgroundColor = 'rgba(255,255,255,0.6)'
       let text1 = abilities[`${parentClass}0`]
       let text2 = abilities[`${parentClass}1`]
       div2.style.textAlign = 'center'
       div2.style.fontFamily = 'sans-serif'
-      div2.style.fontSize = 16
+      div2.style.fontSize = 20
       div2.textContent = `Abilities: ${text1}, ${text2}`
+
+      const div4 = document.getElementById('div4')
+      div4.style.backgroundColor = `rgba(255,255,255,0.6)`
+      div4.style.textAlign = 'center'
+      div4.style.fontSize = 20
+      div4.textContent = `Description:\n${description}`
+
+      const whitewall = document.createElement('div')
+      whitewall.style.backgroundColor = 'rgba(255,255,255,0.6)'
+      whitewall.style.top = `10vh`
+      whitewall.style.right = '0'
+      whitewall.style.width = `35vw`
+      whitewall.style.height = `30vh`
+      whitewall.style.position = 'absolute'
+      body.prepend(whitewall)
 
       // $.get('https://')
     })
+  })
   }
 
 
