@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded",function(){
   const body = document.body;const obj = {}
   const stat = {}
   let current;
-  let labels;
+  let abilities = {};
 
   const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`, data => {
     console.log(data.results)
@@ -18,26 +18,16 @@ document.addEventListener("DOMContentLoaded",function(){
           dataList.appendChild(ball)
         }
 
-  const aChart = document.createElement('canvas')
-  aChart.setAttribute('id','chart1')
-  
-  const bChart = document.createElement('canvas')
-  bChart.setAttribute('id','chart2')
-
-const dataChart = {
-  labels: ['hp','attack','defense','special-attack','special-defense','speed'],
-  datasets: [{
-    label: 'Base Stats',
-    data: labels,
-    fill: true,
-    backgroundColor: 'rgba(255,0,0,0.3)',
-    borderColor: 'black',
-    borderWidth: 1,
-  }]
-}
 
 
-
+const options = {
+  indexAxis: 'y',
+  scales: {
+    x: {
+      beginAtZero: true
+    }
+  }
+};
     
 
   function search(){
@@ -51,14 +41,18 @@ const dataChart = {
       $.get(`https://pokeapi.co/api/v2/pokemon/${query}`, (data) => {
         theImg = (data.sprites[`front_default`])
         let names = {}
+        console.log(data['abilities'][0])
         for(let i = 0; i < data.stats.length; i++){
           let temp = data.stats[i]['base_stat']
           let kiy = data.stats[i].stat.name
           names[kiy] = temp
 
         }
+        // for(let j = 0; j < data['ablilities']; j++){
+        //   console.log(data['abilities'][j])['ability']
+        // }
         stat[`${query}`] = names
-        console.log(stat)
+        // console.log(stat)
     })
     setTimeout(pokesprite(query),0)
     pokeball(query)
@@ -67,9 +61,9 @@ const dataChart = {
 function pc(){
   let div = document.createElement('div')
   div.setAttribute('id', 'pc')
+  div.classList.add('carousel')
   div.style.height = '100vh'
   div.style.width = '7vw'
-  div.style.backgroundColor = 'blue'
   div.style.position = 'absolute'
   body.appendChild(div)
 }
@@ -82,14 +76,13 @@ setInterval(function (){
   move.style.top = '50%'
   move.style.left = leftPosition + 'px';
   move.style.transform = 'translateY(-50%)';
-}, 2000);
+}, 1000);
 
 function compareOne(){
   const container1 = document.createElement('div')
   container1.setAttribute(`id`,`container1`)
   container1.style.width = `40vw`
   container1.style.height = `90vh`
-  container1.style.backgroundColor = 'rgba(0,0,0,0.3)'
   container1.style.position = 'absolute'
   container1.style.bottom = `0`
   body.appendChild(container1)
@@ -101,7 +94,6 @@ function compareTwo(){
   container2.setAttribute(`id`, `container2`)
   container2.style.width = `40vw`
   container2.style.height = `90vh`
-  container2.style.backgroundColor = 'rgba(0,0,0,0.3)'
   container2.style.position = 'absolute'
   container2.style.bottom = `0`
   container2.style.right = `0`
@@ -114,11 +106,11 @@ function pokesprite(pokemons){
     const tilesContainer = document.createElement("img");
     tilesContainer.classList.add(`${pokemons}`)
     console.log(pokemons)
-    tilesContainer.setAttribute(`id`, `pokemon ${count}`)
+    tilesContainer.setAttribute(`id`, `pokemon ${pokemons}`)
     setTimeout(()=> {
       tilesContainer.src = `${theImg}`
     document.getElementById('pc').prepend(tilesContainer);
-    }, 1000)
+    }, 1200)
   }
 
   const addEventListeners = () => {
@@ -183,12 +175,13 @@ function pokesprite(pokemons){
       })
       
     })
-
-    toContainerTwo.addEventListener('click', (e) => {
+    toContainerOne.addEventListener('click', (e) => {
+      let chart1 = document.createElement('canvas')
+      chart1.setAttribute('id','chart1')
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
 
-      labels =  [
+      let theLable =  [
       stat[parentClass]['hp'],
       stat[parentClass]['attack'],
       stat[parentClass]['defense'],
@@ -197,23 +190,91 @@ function pokesprite(pokemons){
       stat[parentClass]['speed']
       ]
 
-      const myChart = new CharacterData(aChart, {
+
+      const myChart = new Chart(chart1, {
         type: 'bar',
-        data: dataChart,
-        options: {
-          indexAxis: 'y',
-          scales: {
-            x: {
-              beginAtZero: true
-            }
-          }
-        }
+        data: {
+          labels: [`HP:  ${theLable[0]}`, `attack:  ${theLable[1]}`, `defense:  ${theLable[2]}`, `special-attack:  ${theLable[3]}`, `special-defense:  ${theLable[4]}`, `speed:  ${theLable[5]}`],
+          datasets: [{
+            label: parentClass,
+            data: theLable,
+            fill: true,
+            backgroundColor: ['rgba(255,0,0,0.7)','rgba(255,165,0,0.7)','rgba(255,255,0,0.7)','rgba(0,0,255,0.7)','rgba(0,255,0,0.7)','rgba(128,0,128,0.7)'],
+            borderColor: 'black',
+            borderWidth: 2,
+          }]
+        },
+        options: options
       })
-      container1.appendChild(myChart)
+
+      container1 = document.getElementById('container1')
+      if(container1.childElementCount === 1){
+        container1.removeChild(container1.firstChild)
+      }
+      container1.appendChild(chart1)
+    })
+
+    toContainerTwo.addEventListener('click', (e) => {
+      let chart2 = document.createElement('canvas')
+      chart2.setAttribute('id','chart2')
+      let parent = e.target.parentNode
+      let parentClass = parent.classList[0]
+
+      let theLable =  [
+      stat[parentClass]['hp'],
+      stat[parentClass]['attack'],
+      stat[parentClass]['defense'],
+      stat[parentClass]['special-attack'],
+      stat[parentClass]['special-defense'],
+      stat[parentClass]['speed']
+      ]
+
+
+      const myChart = new Chart(chart2, {
+        type: 'bar',
+        data: {
+          labels: [`HP:  ${theLable[0]}`, `attack:  ${theLable[1]}`, `defense:  ${theLable[2]}`, `special-attack:  ${theLable[3]}`, `special-defense:  ${theLable[4]}`, `speed:  ${theLable[5]}`],
+          datasets: [{
+            label: parentClass,
+            data: theLable,
+            fill: true,
+            backgroundColor: ['rgba(255,0,0,0.7)','rgba(255,165,0,0.7)','rgba(255,255,0,0.7)','rgba(0,0,255,0.7)','rgba(0,255,0,0.7)','rgba(128,0,128,0.7)'],
+            borderColor: 'black',
+            borderWidth: 2,
+          }]
+        },
+        options: options
+      })
+
+      container2 = document.getElementById('container2')
+      if(container2.childElementCount === 1){
+        container2.removeChild(container2.firstChild)
+      }
+      container2.appendChild(chart2)
+
+
 
     })
   }
 
+  $(document).ready(function(){
+    $('.carousel').slick({
+      vertical: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      verticalSwiping: true,
+      infinite: true,
+      arrows: true,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+          }
+        }
+      ]
+    });
+  });
 
   
 })

@@ -15,3 +15,8 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+#chart1{
+    font-size: 18;
+    color: red;
+}
