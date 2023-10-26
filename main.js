@@ -6,11 +6,12 @@ document.addEventListener("DOMContentLoaded",function(){
   const objPoke = {}
   let current;
   let theImg;
-  let count=0;
+  let count = 0;
 
   const body = document.body;
 
   function search(){
+      count++
       let userInput = document.querySelector("#user-section input")
       let query = userInput.value.trim()
       userInput.value = ""
@@ -33,13 +34,13 @@ function pc(){
   let div = document.createElement('div')
   div.setAttribute('id', 'pc')
   div.style.height = '500px'
-  div.style.width = '70px'
+  div.style.width = '100px'
   body.appendChild(div)
 }
 
 function pokesprite(){
     const tilesContainer = document.createElement("img");
-    tilesContainer.classList.add(`${count}`)
+    tilesContainer.classList.add(`b${count}`)
     tilesContainer.setAttribute(`id`, `pokemon ${count}`)
     setTimeout(()=> {
       tilesContainer.src = `${theImg}`
@@ -56,8 +57,7 @@ function pokesprite(){
         if(pokeList !== Object.keys[obj]){
           alert('Pokemon not found in Pokedex')
         } else {
-          count++
-          search()
+          search();
         } }
       })
     }
@@ -70,7 +70,7 @@ function pokesprite(){
 
   function pokeball(){
     const options = document.createElement('div')
-    options.classList.add('{count}')
+    options.classList.add(`b${count}`)
     options.setAttribute('id', `pokemon #${count}`)
     options.style.width = '80px'
     options.style.height = ''
@@ -95,7 +95,13 @@ function pokesprite(){
     toContainerOne.textContent = 'Compare in 1'
     document.getElementById(`pokemon #${count}`).prepend(toContainerOne)
     release.addEventListener('click', (e) => {
-      e.target.parentNode.remove()
+      let parent = e.target.parentNode
+      let parentClass = parent.classList[0]
+      const elements = document.querySelectorAll(`.${parentClass}`)
+      elements.forEach(element => {
+        element.remove()
+      })
+      
     })
   }
 
