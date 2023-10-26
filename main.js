@@ -137,8 +137,11 @@ function compareOne(){
   container3.style.position = 'absolute'
   container3.style.bottom = '0'
   container3.style.left = '0'
-  container3.style.backgroundColor = 'white'
   body.appendChild(container3)
+
+  const div1 = document.createElement('div')
+  div1.setAttribute('id','div1')
+  container3.appendChild(div1)
 }
 
 function compareTwo(){
@@ -158,9 +161,13 @@ function compareTwo(){
   container4.style.position = 'absolute'
   container4.style.bottom = '0'
   container4.style.right = '0'
-  container4.style.backgroundColor = 'white'
   body.appendChild(container4)
+
+  const div2 = document.createElement('div')
+  div2.setAttribute('id','div2')
+  container4.appendChild(div2)
 }
+
 
 
 
@@ -285,16 +292,15 @@ function pokesprite(pokemons){
         container1.removeChild(container1.firstChild)
       }
 
-      const div1 = document.createElement('div')
+      const div1 = document.getElementById('div1')
       div1.style.backgroundColor = 'rgba(255,255,255,0.3)'
       let text1 = abilities[`${parentClass}0`]
       let text2 = abilities[`${parentClass}1`]
       div1.style.textAlign = 'center'
       div1.style.fontFamily = 'sans-serif'
       div1.style.fontSize = 16
-      div1.style.font
+      div1.textContent = ''
       div1.textContent = `Abilities: ${text1}, ${text2}`
-      container3.appendChild(div3)
       container1.appendChild(chart1)
 
 
@@ -338,42 +344,20 @@ function pokesprite(pokemons){
       }
       container2.appendChild(chart2)
 
-
-
-      console.log(abilities)
-      const div2 = document.createElement('div')
+      const div2 = document.getElementById('div2')
+      div2.textContent = ''
       div2.style.backgroundColor = 'rgba(255,255,255,0.3)'
       let text1 = abilities[`${parentClass}0`]
       let text2 = abilities[`${parentClass}1`]
       div2.style.textAlign = 'center'
       div2.style.fontFamily = 'sans-serif'
       div2.style.fontSize = 16
-      div2.style.font
       div2.textContent = `Abilities: ${text1}, ${text2}`
-      container4.appendChild(div2)
 
+      // $.get('https://')
     })
   }
 
-  // $(document).ready(function(){
-  //   $('.carousel').slick({
-  //     vertical: true,
-  //     slidesToShow: 3,
-  //     slidesToScroll: 1,
-  //     verticalSwiping: true,
-  //     infinite: true,
-  //     arrows: true,
-  //     responsive: [
-  //       {
-  //         breakpoint: 768,
-  //         settings: {
-  //           slidesToShow: 1,
-  //         }
-  //       }
-  //     ]
-  //   });
-  // });
 
-  
 })
 })
