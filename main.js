@@ -274,9 +274,10 @@ function pokesprite(pokemons){
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
 
-      $.get(`https://pokeapi.co/api/v2/pokemon-species/${parentClass}`, (data) => {
+      $.get(`https://pokeapi.co/api/v2/pokemon/${parentClass}/`, (data) => {
+        $.get(data.species['url'], (data) => {
+
         let description = (data['flavor_text_entries'][0]['flavor_text'])
-        console.log(description)
 
       let theLable =  [
       stat[parentClass]['hp'],
@@ -334,6 +335,7 @@ function pokesprite(pokemons){
       whitewall2.style.height = `35vh`
       whitewall2.style.position = 'absolute'
     })
+  })
 
     })
 
@@ -343,10 +345,10 @@ function pokesprite(pokemons){
       let parent = e.target.parentNode
       let parentClass = parent.classList[0]
 
-      $.get(`https://pokeapi.co/api/v2/pokemon-species/${parentClass}`, (data) => {
+      $.get(`https://pokeapi.co/api/v2/pokemon/${parentClass}/`, (data) => {
+        $.get(data.species['url'], (data) => {
+
         let description = (data['flavor_text_entries'][0]['flavor_text'])
-        console.log(description)
-     
 
       let theLable =  [
       stat[parentClass]['hp'],
@@ -406,6 +408,7 @@ function pokesprite(pokemons){
 
       // $.get('https://')
     })
+  })
   })
   }
 
