@@ -19,55 +19,55 @@ document.addEventListener("DOMContentLoaded",function(){
   userSection.style.textShadow = 'black 4px 4px'
 
   const pokeList = $.get(`https://pokeapi.co/api/v2/pokemon/?offset=0&limit=1292`, data => {
-            for(let i = 0; i < data.results.length; i++){
-          current = data.results[i].name
-          obj[current] = i
-          let ball=document.createElement('option')
-          ball.value=`${data.results[i].name}`
-         
-          dataList.appendChild(ball)
-        }
-
-
-
-const options = {
-  indexAxis: 'y',
-  scales: {
-    x: {
-      ticks:{
-        color: 'black',
-        family: 'Helvetica',
-        size: 10,
-        style: 'italic',
-        weight: 'bold'
-      },
-      beginAtZero: true
-    },
-    y:{
-      ticks:{
-        color: 'black',
-        family: 'Helvetica',
-        size: 12,
-        style: 'italic',
-        weight: 'bold'
+      for(let i = 0; i < data.results.length; i++){
+        current = data.results[i].name
+        obj[current] = i
+        let ball=document.createElement('option')
+        ball.value=`${data.results[i].name}`
+      
+        dataList.appendChild(ball)
       }
-    }
-  },
-  plugins:{
-    legend:{
-      labels:{
-        font:{
+
+
+
+  const options = {
+    indexAxis: 'y',
+    scales: {
+      x: {
+        ticks:{
           color: 'black',
           family: 'Helvetica',
-          size: 18,
+          size: 10,
+          style: 'italic',
+          weight: 'bold'
+        },
+        beginAtZero: true
+      },
+      y:{
+        ticks:{
+          color: 'black',
+          family: 'Helvetica',
+          size: 12,
           style: 'italic',
           weight: 'bold'
         }
       }
+    },
+    plugins:{
+      legend:{
+        labels:{
+          font:{
+            color: 'black',
+            family: 'Helvetica',
+            size: 18,
+            style: 'italic',
+            weight: 'bold'
+          }
+        }
+      }
     }
-  }
-};
-    
+  };
+      
 
   function search(){
       count++
@@ -89,110 +89,122 @@ const options = {
         let pass = data['abilities']
         for(let j = 0; j < pass.length; j++){
           abilities[`${query}${j}`] = data['abilities'][j]['ability'].name
-
+          abilities[`${query}url${j}`] = data[`abilities`][j][`ability`].url
         }
         
         stat[`${query}`] = names
-        
+        console.log(abilities)
     })
     setTimeout(pokesprite(query),0)
     pokeball(query)
   }
 
-function pc(){
-  let div = document.createElement('div')
-  div.setAttribute('id', 'pc')
-  div.classList.add('carousel')
-  div.style.height = '85vh'
-  div.style.width = '7vw'
-  div.style.position = 'absolute'
-  body.appendChild(div)
-}
+  function pc(){
+    let div = document.createElement('div')
+    div.setAttribute('id', 'pc')
+    div.classList.add('carousel')
+    div.style.height = '85vh'
+    div.style.width = '7vw'
+    div.style.position = 'absolute'
+    body.appendChild(div)
+  }
 
-setInterval(function (){
-  let move = document.getElementById('pc')
-  let windowWidth = window.innerWidth
-  let containerWidth = move.offsetWidth
-  let leftPosition = (windowWidth - containerWidth)/2;
-  move.style.top = '57vh'
-  move.style.left = leftPosition + 'px';
-  move.style.transform = 'translateY(-50%)';
-}, 1000);
+  setInterval(function (){
+    let move = document.getElementById('pc')
+    let windowWidth = window.innerWidth
+    let containerWidth = move.offsetWidth
+    let leftPosition = (windowWidth - containerWidth)/2;
+    move.style.top = '57vh'
+    move.style.left = leftPosition + 'px';
+    move.style.transform = 'translateY(-50%)';
+  }, 1000);
 
-function compareOne(){
-  const container1 = document.createElement('div')
-  container1.setAttribute(`id`,`container1`)
-  container1.style.width = `35vw`
-  container1.style.height = `90vh`
-  container1.style.position = 'absolute'
-  container1.style.bottom = `0`
-  body.appendChild(container1)
+  function compareOne(){
+    const container1 = document.createElement('div')
+    container1.setAttribute(`id`,`container1`)
+    container1.style.width = `35vw`
+    container1.style.height = `90vh`
+    container1.style.position = 'absolute'
+    container1.style.bottom = `0`
+    body.appendChild(container1)
 
-  const container3 = document.createElement('div')
-  container3.setAttribute('id', 'container3')
-  container3.style.width = '35vw'
-  container3.style.height = '55vh'
-  container3.style.position = 'absolute'
-  container3.style.bottom = '0'
-  container3.style.left = '0'
-  body.appendChild(container3)
+    const container3 = document.createElement('div')
+    container3.setAttribute('id', 'container3')
+    container3.style.width = '35vw'
+    container3.style.height = '55vh'
+    container3.style.position = 'absolute'
+    container3.style.bottom = '0'
+    container3.style.left = '0'
+    body.appendChild(container3)
 
-  const div1 = document.createElement('div')
-  div1.setAttribute('id','div1')
-  container3.appendChild(div1)
+    const div1 = document.createElement('div')
+    div1.setAttribute('id','div1')
+    div1.style.height = '3vh'
+    container3.appendChild(div1)
+    const abil1 = document.createElement('button')
+    abil1.setAttribute('id','abil1')
+    abil1.style.justifyContent = 'space-between'
+    abil1.style.display = 'none'
+    abil1.style.overflow = 'hidden'
+    abil1.style.textOverflow = 'ellipsis'
+    div1.appendChild(abil1)
+    const descriptionButton1 = document.createElement('button')
+    descriptionButton1.setAttribute('id','descriptionButton1')
+    descriptionButton1.display = 'none'
+    div1.appendChild(descriptionButton1)
 
-  const div3 = document.createElement('div')
-  div3.setAttribute('id','div3')
-  container3.appendChild(div3)
+    const div3 = document.createElement('div')
+    div3.setAttribute('id','div3')
+    container3.appendChild(div3)
 
-  const whitewall2 = document.createElement('div')
-  whitewall2.setAttribute('id','whitewall2')
-  body.prepend(whitewall2)
-}
+    const whitewall2 = document.createElement('div')
+    whitewall2.setAttribute('id','whitewall2')
+    body.prepend(whitewall2)
+  }
 
-function compareTwo(){
-  const container2 = document.createElement('div');
-  container2.setAttribute(`id`, `container2`)
-  container2.style.width = `35vw`
-  container2.style.height = `90vh`
-  container2.style.position = 'absolute'
-  container2.style.bottom = `0`
-  container2.style.right = `0`
-  body.appendChild(container2)
+  function compareTwo(){
+    const container2 = document.createElement('div');
+    container2.setAttribute(`id`, `container2`)
+    container2.style.width = `35vw`
+    container2.style.height = `90vh`
+    container2.style.position = 'absolute'
+    container2.style.bottom = `0`
+    container2.style.right = `0`
+    body.appendChild(container2)
 
-  const container4 = document.createElement('div')
-  container4.setAttribute('id', 'container4')
-  container4.style.width = '35vw'
-  container4.style.height = '55vh'
-  container4.style.position = 'absolute'
-  container4.style.bottom = '0'
-  container4.style.right = '0'
-  body.appendChild(container4)
+    const container4 = document.createElement('div')
+    container4.setAttribute('id', 'container4')
+    container4.style.width = '35vw'
+    container4.style.height = '55vh'
+    container4.style.position = 'absolute'
+    container4.style.bottom = '0'
+    container4.style.right = '0'
+    body.appendChild(container4)
 
-  const div2 = document.createElement('div')
-  div2.setAttribute('id','div2')
-  container4.appendChild(div2)
+    const div2 = document.createElement('div')
+    div2.setAttribute('id','div2')
+    container4.appendChild(div2)
 
-  const div4 = document.createElement('div')
-  div4.setAttribute('id','div4')
-  container4.appendChild(div4)
+    const div4 = document.createElement('div')
+    div4.setAttribute('id','div4')
+    container4.appendChild(div4)
 
-  const whitewall = document.createElement('div')
-  whitewall.setAttribute('id','whitewall')
-  body.prepend(whitewall)
-}
-
-
+    const whitewall = document.createElement('div')
+    whitewall.setAttribute('id','whitewall')
+    body.prepend(whitewall)
+  }
 
 
-function pokesprite(pokemons){
-    const tilesContainer = document.createElement("img");
-    tilesContainer.classList.add(`${pokemons}`)
-    tilesContainer.setAttribute(`id`, `pokemon ${pokemons}`)
-    setTimeout(()=> {
-      tilesContainer.src = `${theImg}`
-    document.getElementById('pc').prepend(tilesContainer);
-    }, 1200)
+
+
+  function pokesprite(pokemons){
+      const tilesContainer = document.createElement("img");
+      tilesContainer.classList.add(`${pokemons}`)
+      tilesContainer.setAttribute(`id`, `pokemon ${pokemons}`)
+      setTimeout(()=> {
+        tilesContainer.src = `${theImg}`
+      document.getElementById('pc').prepend(tilesContainer);
+      }, 1600)
   }
 
   const addEventListeners = () => {
@@ -200,21 +212,22 @@ function pokesprite(pokemons){
       document.querySelector("#user-section input").addEventListener("keydown", (event) => {
         if(event.key === "Enter"){
           
-       
+      
         if(pokeList !== Object.keys[obj]){
           alert('Pokemon not found in Pokedex')
         } else {
           search();
         } }
       })
-    }
+  }
 
-    const start = () => {
-      addEventListeners()
-      pc()
-      compareOne()
-      compareTwo()
-    }
+
+  const start = () => {
+    addEventListeners()
+    pc()
+    compareOne()
+    compareTwo()
+  }
   start()
 
   function pokeball(pokemons){
@@ -268,6 +281,7 @@ function pokesprite(pokemons){
       })
       
     })
+
     toContainerOne.addEventListener('click', (e) => {
       let chart1 = document.createElement('canvas')
       chart1.setAttribute('id','chart1')
@@ -314,18 +328,27 @@ function pokesprite(pokemons){
       div1.style.backgroundColor = 'rgba(255,255,255,0.6)'
       let text1 = abilities[`${parentClass}0`]
       let text2 = abilities[`${parentClass}1`]
-      div1.style.textAlign = 'center'
-      div1.style.fontFamily = 'sans-serif'
-      div1.style.fontSize = 20
-      div1.textContent = ''
-      div1.textContent = `Abilities: ${text1}, ${text2}`
+      abil1.style.backgroundColor = 'red'
+      abil1.style.height = '3vh'
+      abil1.style.width = '3vw'
+      abil1.style.borderRadius = '8px'
+      abil1.style.display = 'flex'
+      abil1.textContent = 'Ability'
+
       container1.appendChild(chart1)
 
       const div3 = document.getElementById('div3')
       div3.style.backgroundColor = `rgba(255,255,255,0.6)`
       div3.style.textAlign = 'center'
       div3.style.fontSize = 20
-      div3.textContent = `Description:\n${description}`
+
+      descriptionButton1.style.backgroundColor = 'blue'
+
+      
+      abil1.addEventListener('click', (e) => {
+
+        div3.textContent = `Abilities: ${text1}, ${text2}`
+      })
 
       const whitewall2 = document.getElementById('whitewall2')
       whitewall2.style.backgroundColor = 'rgba(255,255,255,0.6)'
@@ -414,4 +437,5 @@ function pokesprite(pokemons){
 
 
 })
+
 })
